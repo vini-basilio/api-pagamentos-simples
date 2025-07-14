@@ -22,6 +22,7 @@ public class User {
     private String lastName;
     @Column (unique = true)
     private String cpf;
+    @Column (unique = true)
     private String email;
     private String password;
     private BigDecimal balance;
