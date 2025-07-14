@@ -12,6 +12,7 @@ import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -41,4 +42,7 @@ public class UserService {
         );
     }
 
+    public List<User> getAllUsers() {
+        return this.userRespository.findAll();
+    }
 }
