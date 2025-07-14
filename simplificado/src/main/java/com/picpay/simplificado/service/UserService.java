@@ -4,6 +4,7 @@ import com.picpay.simplificado.DTO.UserCreatedDTO;
 import com.picpay.simplificado.DTO.UserDTO;
 import com.picpay.simplificado.domain.user.User;
 import com.picpay.simplificado.domain.user.UserType;
+import com.picpay.simplificado.exception.UserCreation;
 import com.picpay.simplificado.exception.ValidateTransaction;
 import com.picpay.simplificado.repository.UserRespository;
 import lombok.extern.slf4j.Slf4j;
@@ -29,9 +30,18 @@ public class UserService {
         return this.userRespository.findUserById(id).orElseThrow(() -> new ExpressionException("Usuário não encontrado"));
     }
     public void saveUser(User user) {
+
         this.userRespository.save(user);
     }
     public UserCreatedDTO createUser(UserDTO user) {
+        this.userRespository
+                .findUserByCpf(user.document())
+                .ifPresent((cpf) -> new UserCreation("Problemas com o documento cadastrado"));
+
+        this.userRespository
+                .findUserByEmail(user.document())
+                .ifPresent((email) -> new UserCreation("Problemas com o e-mail cadastrado"));
+
         User newUser = new User(user);
         this.saveUser(newUser);
         return new UserCreatedDTO(
