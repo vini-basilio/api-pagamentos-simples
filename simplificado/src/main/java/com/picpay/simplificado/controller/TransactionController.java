@@ -1,8 +1,8 @@
 package com.picpay.simplificado.controller;
 
-
 import com.picpay.simplificado.DTO.TransactionDTO;
-import com.picpay.simplificado.domain.transaction.Transaction;
+import com.picpay.simplificado.DTO.TransactionRequestDTO;
+
 import com.picpay.simplificado.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +18,8 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @PostMapping
-    public ResponseEntity<Transaction> createTransaction(@RequestBody TransactionDTO transaction) throws Exception {
-        Transaction newTransaction = transactionService.createTransaction(transaction);
+    public ResponseEntity<TransactionDTO> createTransaction(@RequestBody TransactionRequestDTO transaction) throws Exception {
+        var newTransaction = transactionService.createTransaction(transaction);
         return new ResponseEntity<>(newTransaction, HttpStatus.CREATED);
     }
 }
