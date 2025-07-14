@@ -1,5 +1,5 @@
 package com.picpay.simplificado.domain.user;
-import com.picpay.simplificado.DTO.UserCreationDTO;
+import com.picpay.simplificado.DTO.UserRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,7 +27,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
-    public User(UserCreationDTO user) {
+    public User(UserRequestDTO user) {
         this.firstName = user.firstName();
         this.lastName = user.lastName();
         this.cpf = user.document();

@@ -1,7 +1,7 @@
 package com.picpay.simplificado.service;
 
 import com.picpay.simplificado.DTO.UserDTO;
-import com.picpay.simplificado.DTO.UserCreationDTO;
+import com.picpay.simplificado.DTO.UserRequestDTO;
 import com.picpay.simplificado.domain.user.User;
 import com.picpay.simplificado.domain.user.UserType;
 import com.picpay.simplificado.exception.UserCreationException;
@@ -42,7 +42,7 @@ public class UserService {
         this.userRespository.save(user);
     }
 
-    public UserDTO createUser(UserCreationDTO user) {
+    public UserDTO createUser(UserRequestDTO user) {
         var document = this.userRespository.findUserByCpf(user.document());
         if(document.isPresent()) throw new UserCreationException("Problemas com o documento cadastrado");
 
