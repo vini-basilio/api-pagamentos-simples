@@ -1,8 +1,7 @@
 package com.picpay.simplificado.service;
 
-import com.picpay.simplificado.DTO.UserCreatedDTO;
 import com.picpay.simplificado.DTO.UserDTO;
-import com.picpay.simplificado.domain.user.User;
+import com.picpay.simplificado.DTO.UserCreationDTO;
 import com.picpay.simplificado.domain.user.UserType;
 import com.picpay.simplificado.exception.UserCreation;
 import com.picpay.simplificado.exception.ValidateTransaction;
@@ -10,6 +9,7 @@ import com.picpay.simplificado.repository.UserRespository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ExpressionException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -20,20 +20,27 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRespository userRespository;
-    public void validateTransaction(User sender, BigDecimal amount) throws Exception{
+    // Apenas para demonstração!
+    // Não é uma configuração de segurança real
+    @Autowired
+    private PasswordEncoder encoder;
+
+    public void validateTransaction(com.picpay.simplificado.domain.user.User sender, BigDecimal amount) throws Exception{
         if(sender.getUserType() == UserType.MERCHART)
             throw new ValidateTransaction("Usuário do tipo lojista não está autorizado a realizar transação");
         if(sender.getBalance().compareTo(amount) < 0)
             throw new ValidateTransaction("Saldo insuficiente");
     }
-    public User findUserById(Long id){
+
+    public com.picpay.simplificado.domain.user.User findUserById(Long id){
         return this.userRespository.findUserById(id).orElseThrow(() -> new ExpressionException("Usuário não encontrado"));
     }
-    public void saveUser(User user) {
 
+    public void saveUser(com.picpay.simplificado.domain.user.User user) {
         this.userRespository.save(user);
     }
-    public UserCreatedDTO createUser(UserDTO user) {
+
+    public UserDTO createUser(UserCreationDTO user) {
         this.userRespository
                 .findUserByCpf(user.document())
                 .ifPresent((cpf) -> new UserCreation("Problemas com o documento cadastrado"));
@@ -42,17 +49,32 @@ public class UserService {
                 .findUserByEmail(user.document())
                 .ifPresent((email) -> new UserCreation("Problemas com o e-mail cadastrado"));
 
-        User newUser = new User(user);
+        com.picpay.simplificado.domain.user.User newUser = new com.picpay.simplificado.domain.user.User(user);
+
+        newUser.setPassword(encoder.encode(newUser.getPassword()));
+
         this.saveUser(newUser);
-        return new UserCreatedDTO(
+
+        return new UserDTO(
+                newUser.getId(),
                 newUser.getFirstName(),
                 newUser.getLastName(),
                 newUser.getBalance(),
-                newUser.getId()
+                newUser.getEmail(),
+                newUser.getUserType()
         );
     }
 
-    public List<User> getAllUsers() {
-        return this.userRespository.findAll();
+    public List<UserDTO> getAllUsers() {
+        return this.userRespository.findAll()
+                .stream()
+                .map( user -> new UserDTO(
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getBalance(),
+                user.getEmail(),
+                user.getUserType()
+        )).toList();
     }
 }
