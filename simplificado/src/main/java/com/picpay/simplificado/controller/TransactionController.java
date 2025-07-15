@@ -1,7 +1,7 @@
 package com.picpay.simplificado.controller;
 
-import com.picpay.simplificado.DTO.TransactionDTO;
-import com.picpay.simplificado.DTO.TransactionRequestDTO;
+import com.picpay.simplificado.DTO.transaction.TransactionDTO;
+import com.picpay.simplificado.DTO.transaction.TransactionRequestDTO;
 
 import com.picpay.simplificado.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;

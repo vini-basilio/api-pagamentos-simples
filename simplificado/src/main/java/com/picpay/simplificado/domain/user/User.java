@@ -1,5 +1,5 @@
 package com.picpay.simplificado.domain.user;
-import com.picpay.simplificado.DTO.UserRequestDTO;
+import com.picpay.simplificado.DTO.user.UserRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;
 

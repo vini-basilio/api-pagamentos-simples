@@ -2,9 +2,9 @@ package com.picpay.simplificado.service;
 
 
 import com.picpay.simplificado.DTO.AuthDTO;
-import com.picpay.simplificado.DTO.TransactionDTO;
-import com.picpay.simplificado.DTO.TransactionRequestDTO;
-import com.picpay.simplificado.DTO.UserDTO;
+import com.picpay.simplificado.DTO.transaction.TransactionDTO;
+import com.picpay.simplificado.DTO.transaction.TransactionRequestDTO;
+import com.picpay.simplificado.DTO.user.UserDTO;
 import com.picpay.simplificado.domain.transaction.Transaction;
 import com.picpay.simplificado.domain.user.User;
 import com.picpay.simplificado.exception.ValidateTransactionException;

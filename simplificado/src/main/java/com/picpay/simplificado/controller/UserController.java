@@ -1,7 +1,7 @@
 package com.picpay.simplificado.controller;
 
-import com.picpay.simplificado.DTO.UserDTO;
-import com.picpay.simplificado.DTO.UserRequestDTO;
+import com.picpay.simplificado.DTO.user.UserDTO;
+import com.picpay.simplificado.DTO.user.UserRequestDTO;
 import com.picpay.simplificado.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

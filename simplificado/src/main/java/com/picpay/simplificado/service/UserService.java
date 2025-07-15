@@ -1,7 +1,7 @@
 package com.picpay.simplificado.service;
 
-import com.picpay.simplificado.DTO.UserDTO;
-import com.picpay.simplificado.DTO.UserRequestDTO;
+import com.picpay.simplificado.DTO.user.UserDTO;
+import com.picpay.simplificado.DTO.user.UserRequestDTO;
 import com.picpay.simplificado.domain.user.User;
 import com.picpay.simplificado.domain.user.UserType;
 import com.picpay.simplificado.exception.UserCreationException;
@@ -27,11 +27,11 @@ public class UserService {
     @Autowired
     private PasswordEncoder encoder;
 
-    public void validateTransaction(com.picpay.simplificado.domain.user.User sender, BigDecimal amount) throws Exception{
+    public void validateTransaction(User sender, BigDecimal amount) throws Exception{
         if(sender.getUserType() == UserType.MERCHART)
             throw new ValidateTransactionException("Usuário do tipo lojista não está autorizado a realizar transação",  HttpStatus.FORBIDDEN.value());
         if(sender.getBalance().compareTo(amount) < 0)
-            throw new ValidateTransactionException("Saldo insuficiente", HttpStatus.FORBIDDEN.value());
+            throw new ValidateTransactionException("Saldo insuficiente de: id " + sender.getId(), HttpStatus.FORBIDDEN.value());
     }
 
     public User findUserById(Long id){
