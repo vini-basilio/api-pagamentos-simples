@@ -1,4 +1,4 @@
-package com.picpay.simplificado.DTO;
+package com.picpay.simplificado.DTO.user;
 import com.picpay.simplificado.domain.user.UserType;
 
 import java.math.BigDecimal;
