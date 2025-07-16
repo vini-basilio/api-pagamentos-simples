@@ -6,6 +6,6 @@ import java.util.UUID;
 
 public record TransactionDTO(
         UUID id,
-        UserDTO sender,
-        UserDTO receiver
+        UserDTO payer,
+        UserDTO payee
 ) { }

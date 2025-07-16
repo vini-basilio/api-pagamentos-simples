@@ -39,8 +39,9 @@ public class TransactionService {
 
 
     public TransactionDTO createTransaction(TransactionRequestDTO request) throws Exception {
-        var sender = this.userService.findUserById(request.senderId());
-        var receiver = this.userService.findUserById(request.receiverId());
+        log.info(request.payer().toString());
+        var sender = this.userService.findUserById(request.payer());
+        var receiver = this.userService.findUserById(request.payee());
 
         userService.validateTransaction(sender, request.value());
         this.authorizeTransaction(sender, request.value());
