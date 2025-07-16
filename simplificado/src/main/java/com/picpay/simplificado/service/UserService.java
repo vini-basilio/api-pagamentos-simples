@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -34,19 +35,19 @@ public class UserService {
             throw new ValidateTransactionException("Saldo insuficiente de: id " + sender.getId(), HttpStatus.FORBIDDEN.value());
     }
 
-    public User findUserById(Long id){
+    public User findUserById(UUID id){
         return this.userRespository.findUserById(id).orElseThrow(() -> new ExpressionException("Usuário não encontrado"));
     }
 
-    public void saveUser(com.picpay.simplificado.domain.user.User user) {
+    public void saveUser(User user) {
         this.userRespository.save(user);
     }
 
     public UserDTO createUser(UserRequestDTO user) {
-        var document = this.userRespository.findUserByCpf(user.document());
+        var document = this.userRespository.findUserByCpf(user.cpf());
         if(document.isPresent()) throw new UserCreationException("Problemas com o documento cadastrado");
 
-        var email = this.userRespository.findUserByCpf(user.email());
+        var email = this.userRespository.findUserByEmail(user.email());
         if(email.isPresent()) throw new UserCreationException("Problemas com o e-mail cadastrado");
 
         User newUser = new User(user);

@@ -92,8 +92,8 @@ public class TransactionService {
     @Async
     public void handleTransactionCompleted(Transaction transaction, User sender, User receiver) {
         log.info("Nova transação autorizada: " + transaction.getId());
-        notificationService.sendNotification(sender.getId(), "Transação realizada com sucesso");
-        notificationService.sendNotification(receiver.getId(), "Transação recebida com sucesso");
+        notificationService.sendNotification(sender, "Transação realizada com sucesso");
+        notificationService.sendNotification(receiver, "Transação recebida com sucesso");
     }
 
     public void authorizeTransaction(User sender, BigDecimal value) throws Exception {

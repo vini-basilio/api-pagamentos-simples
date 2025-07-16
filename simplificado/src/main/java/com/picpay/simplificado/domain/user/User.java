@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Entity(name = "users")
 @Table(name = "users")
@@ -14,8 +15,8 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(of="id")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String firstName;
     private String lastName;
     @Column (unique = true)
@@ -30,7 +31,7 @@ public class User {
     public User(UserRequestDTO user) {
         this.firstName = user.firstName();
         this.lastName = user.lastName();
-        this.cpf = user.document();
+        this.cpf = user.cpf();
         this.balance = user.balance();
         this.userType = user.userType();
         this.password =  user.password();

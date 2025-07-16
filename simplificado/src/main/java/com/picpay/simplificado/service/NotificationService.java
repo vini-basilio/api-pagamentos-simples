@@ -1,6 +1,7 @@
 package com.picpay.simplificado.service;
 import com.picpay.simplificado.DTO.NotificationDTO;
 import com.picpay.simplificado.domain.NotificationQueue;
+import com.picpay.simplificado.domain.user.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,8 +23,8 @@ public class NotificationService {
     private final Queue<NotificationQueue> retryQueue = new ConcurrentLinkedQueue<>();
 
     @Async
-    public void sendNotification(Long userId, String message) {
-        NotificationQueue request = new NotificationQueue(userId, message);
+    public void sendNotification(User user, String message) {
+        NotificationQueue request = new NotificationQueue(user , message);
         sendWithRetry(request, 0);
     }
 
@@ -31,12 +32,12 @@ public class NotificationService {
         try {
 
             var response = restTemplate.postForEntity(notificationUrl, request, NotificationDTO.class);
-            log.info("Notificação enviada com sucesso para {}", request.id());
+            log.info("Notificação enviada com sucesso para {}", request.user().getId());
 
         } catch (Exception ex) {
-
+            var id = request.user().getId();
             if (attempt < 3) {
-                log.warn("Tentativa {} falhou para {}, tentando novamente...", attempt + 1, request.id());
+                log.warn("Tentativa {} falhou para {}, tentando novamente...", attempt + 1, id) ;
                 long calculedDelay = (long) Math.pow(2, attempt);
 
                 CompletableFuture
@@ -44,7 +45,7 @@ public class NotificationService {
                         .execute(() -> sendWithRetry(request, attempt + 1));
 
             } else {
-                log.error("Falha definitiva na notificação para {}", request.id());
+                log.error("Falha definitiva na notificação para {}", id);
             }
         }
     }

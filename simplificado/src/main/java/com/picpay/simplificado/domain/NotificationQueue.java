@@ -1,4 +1,5 @@
 package com.picpay.simplificado.domain;
 
-public record NotificationQueue(Long id, String message) {
-}
+import com.picpay.simplificado.domain.user.User;
+
+public record NotificationQueue(User user, String message) { }
