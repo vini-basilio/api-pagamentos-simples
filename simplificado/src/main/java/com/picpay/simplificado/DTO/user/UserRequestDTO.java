@@ -3,13 +3,12 @@ package com.picpay.simplificado.DTO.user;
 import com.picpay.simplificado.domain.user.UserType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import org.hibernate.validator.constraints.br.CPF;
 import java.math.BigDecimal;
 
 public record UserRequestDTO(
         @NotBlank String firstName,
         @NotBlank String lastName,
-        @NotBlank @CPF String cpf,
+        @NotBlank String document,
         BigDecimal balance,
         @NotBlank @Email String email,
         @NotBlank String password,

@@ -44,7 +44,7 @@ public class UserService {
     }
 
     public UserDTO createUser(UserRequestDTO user) {
-        var document = this.userRespository.findUserByCpf(user.cpf());
+        var document = this.userRespository.findUserByCpf(user.document());
         if(document.isPresent()) throw new UserCreationException("Problemas com o documento cadastrado");
 
         var email = this.userRespository.findUserByEmail(user.email());

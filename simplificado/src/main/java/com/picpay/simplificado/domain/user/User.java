@@ -31,7 +31,7 @@ public class User {
     public User(UserRequestDTO user) {
         this.firstName = user.firstName();
         this.lastName = user.lastName();
-        this.cpf = user.cpf();
+        this.cpf = user.document();
         this.balance = user.balance();
         this.userType = user.userType();
         this.password =  user.password();
