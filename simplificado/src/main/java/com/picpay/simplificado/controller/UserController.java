@@ -3,6 +3,7 @@ package com.picpay.simplificado.controller;
 import com.picpay.simplificado.DTO.user.UserDTO;
 import com.picpay.simplificado.DTO.user.UserRequestDTO;
 import com.picpay.simplificado.service.UserService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserRequestDTO user) {
+    public ResponseEntity<UserDTO> createUser(@RequestBody @Valid UserRequestDTO user) {
         var newUser = userService.createUser(user);
         log.info("Usuário criado: " + newUser.toString() + " " +  LocalDateTime.now());
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);

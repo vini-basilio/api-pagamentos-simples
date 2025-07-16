@@ -4,6 +4,7 @@ import com.picpay.simplificado.DTO.transaction.TransactionDTO;
 import com.picpay.simplificado.DTO.transaction.TransactionRequestDTO;
 
 import com.picpay.simplificado.service.TransactionService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @PostMapping
-    public ResponseEntity<TransactionDTO> createTransaction(@RequestBody TransactionRequestDTO transaction) throws Exception {
+    public ResponseEntity<TransactionDTO> createTransaction(@RequestBody @Valid TransactionRequestDTO transaction) throws Exception {
         var newTransaction = transactionService.createTransaction(transaction);
         return new ResponseEntity<>(newTransaction, HttpStatus.CREATED);
     }
