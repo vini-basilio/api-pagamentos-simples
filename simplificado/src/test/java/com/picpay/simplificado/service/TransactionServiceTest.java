@@ -82,14 +82,12 @@ class TransactionServiceTest {
 
         var response = transactionService.createTransaction(transaction);
 
-        sender.setBalance(sender.getBalance().subtract(new BigDecimal("100.00")));
-        receiver.setBalance(receiver.getBalance().add(new BigDecimal("100.00")));
 
         // testa se o saldo do sender está correto
-        assertEquals(new BigDecimal("900.00"), response.sender().balance());
+        assertEquals(new BigDecimal("900.00"), response.payer().balance());
         assertEquals(new BigDecimal("900.00"), sender.getBalance());
         // testa se o saldo do receiver está correto
-        assertEquals(new BigDecimal("2600.50"), response.receiver().balance());
+        assertEquals(new BigDecimal("2600.50"), response.payee().balance());
         assertEquals(new BigDecimal("2600.50"), receiver.getBalance());
 
         // testa se o banco foi chamado de forma correta

@@ -50,7 +50,7 @@ class UserServiceTest {
                 UserType.COMMON
         );
 
-        when(userRespository.findUserByCpf(userRequestDTO.cpf())).thenReturn(Optional.empty());
+        when(userRespository.findUserByCpf(userRequestDTO.document())).thenReturn(Optional.empty());
         when(userRespository.findUserByEmail(userRequestDTO.email())).thenReturn(Optional.empty());
         when(enconder.encode(userRequestDTO.password())).thenReturn(userRequestDTO.password());
 
@@ -78,7 +78,7 @@ class UserServiceTest {
                 UserType.COMMON
         );
 
-        when(userRespository.findUserByCpf(userRequestDTO.cpf())).thenReturn(Optional.of(new User()));
+        when(userRespository.findUserByCpf(userRequestDTO.document())).thenReturn(Optional.of(new User()));
 
         assertThrows(UserCreationException.class, () -> {
             userService.createUser(userRequestDTO);
