@@ -8,7 +8,7 @@
 		<version>3.5.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.picpay</groupId>
+	<groupId>com.pagamentos</groupId>
 	<artifactId>simplificado</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>simplificado</name>
@@ -80,6 +80,8 @@
 							<artifactId>lombok</artifactId>
 						</path>
 					</annotationProcessorPaths>
+					<source>22</source>
+					<target>22</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -96,5 +98,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
